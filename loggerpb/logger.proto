@@ -15,7 +15,7 @@ message Report {
 }
 
 message DataLoggerRequest {
-    string date = 1;
+    string timestamp = 1;
     string source = 2;
     Report report = 3;
 }
