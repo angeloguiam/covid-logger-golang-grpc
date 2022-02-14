@@ -276,14 +276,14 @@ var file_loggerpb_logger_proto_rawDesc = []byte{
 	0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0e, 0x2e, 0x6c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x2e,
 	0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x2a, 0x1b,
 	0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x06, 0x0a, 0x02, 0x4f, 0x4b, 0x10, 0x00,
-	0x12, 0x09, 0x0a, 0x05, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x10, 0x02, 0x32, 0x53, 0x0a, 0x11, 0x44,
+	0x12, 0x09, 0x0a, 0x05, 0x45, 0x52, 0x52, 0x4f, 0x52, 0x10, 0x02, 0x32, 0x57, 0x0a, 0x11, 0x44,
 	0x61, 0x74, 0x61, 0x4c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x12, 0x3e, 0x0a, 0x03, 0x4c, 0x6f, 0x67, 0x12, 0x19, 0x2e, 0x6c, 0x6f, 0x67, 0x67, 0x65, 0x72,
-	0x2e, 0x44, 0x61, 0x74, 0x61, 0x4c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x6c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x2e, 0x44, 0x61, 0x74, 0x61,
-	0x4c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
-	0x42, 0x0c, 0x5a, 0x0a, 0x2e, 0x2f, 0x6c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x70, 0x62, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x12, 0x42, 0x0a, 0x07, 0x4c, 0x6f, 0x67, 0x44, 0x61, 0x74, 0x61, 0x12, 0x19, 0x2e, 0x6c, 0x6f,
+	0x67, 0x67, 0x65, 0x72, 0x2e, 0x44, 0x61, 0x74, 0x61, 0x4c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1a, 0x2e, 0x6c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x2e,
+	0x44, 0x61, 0x74, 0x61, 0x4c, 0x6f, 0x67, 0x67, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x00, 0x42, 0x0c, 0x5a, 0x0a, 0x2e, 0x2f, 0x6c, 0x6f, 0x67, 0x67, 0x65, 0x72,
+	0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -310,8 +310,8 @@ var file_loggerpb_logger_proto_depIdxs = []int32{
 	1, // 0: logger.DataLoggerRequest.report:type_name -> logger.Report
 	1, // 1: logger.DataLoggerResponse.summary:type_name -> logger.Report
 	0, // 2: logger.DataLoggerResponse.status:type_name -> logger.Status
-	2, // 3: logger.DataLoggerService.Log:input_type -> logger.DataLoggerRequest
-	3, // 4: logger.DataLoggerService.Log:output_type -> logger.DataLoggerResponse
+	2, // 3: logger.DataLoggerService.LogData:input_type -> logger.DataLoggerRequest
+	3, // 4: logger.DataLoggerService.LogData:output_type -> logger.DataLoggerResponse
 	4, // [4:5] is the sub-list for method output_type
 	3, // [3:4] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
@@ -395,7 +395,7 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type DataLoggerServiceClient interface {
-	Log(ctx context.Context, in *DataLoggerRequest, opts ...grpc.CallOption) (*DataLoggerResponse, error)
+	LogData(ctx context.Context, in *DataLoggerRequest, opts ...grpc.CallOption) (*DataLoggerResponse, error)
 }
 
 type dataLoggerServiceClient struct {
@@ -406,9 +406,9 @@ func NewDataLoggerServiceClient(cc grpc.ClientConnInterface) DataLoggerServiceCl
 	return &dataLoggerServiceClient{cc}
 }
 
-func (c *dataLoggerServiceClient) Log(ctx context.Context, in *DataLoggerRequest, opts ...grpc.CallOption) (*DataLoggerResponse, error) {
+func (c *dataLoggerServiceClient) LogData(ctx context.Context, in *DataLoggerRequest, opts ...grpc.CallOption) (*DataLoggerResponse, error) {
 	out := new(DataLoggerResponse)
-	err := c.cc.Invoke(ctx, "/logger.DataLoggerService/Log", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/logger.DataLoggerService/LogData", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -417,35 +417,35 @@ func (c *dataLoggerServiceClient) Log(ctx context.Context, in *DataLoggerRequest
 
 // DataLoggerServiceServer is the server API for DataLoggerService service.
 type DataLoggerServiceServer interface {
-	Log(context.Context, *DataLoggerRequest) (*DataLoggerResponse, error)
+	LogData(context.Context, *DataLoggerRequest) (*DataLoggerResponse, error)
 }
 
 // UnimplementedDataLoggerServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedDataLoggerServiceServer struct {
 }
 
-func (*UnimplementedDataLoggerServiceServer) Log(context.Context, *DataLoggerRequest) (*DataLoggerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Log not implemented")
+func (*UnimplementedDataLoggerServiceServer) LogData(context.Context, *DataLoggerRequest) (*DataLoggerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LogData not implemented")
 }
 
 func RegisterDataLoggerServiceServer(s *grpc.Server, srv DataLoggerServiceServer) {
 	s.RegisterService(&_DataLoggerService_serviceDesc, srv)
 }
 
-func _DataLoggerService_Log_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DataLoggerService_LogData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DataLoggerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DataLoggerServiceServer).Log(ctx, in)
+		return srv.(DataLoggerServiceServer).LogData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/logger.DataLoggerService/Log",
+		FullMethod: "/logger.DataLoggerService/LogData",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DataLoggerServiceServer).Log(ctx, req.(*DataLoggerRequest))
+		return srv.(DataLoggerServiceServer).LogData(ctx, req.(*DataLoggerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -455,8 +455,8 @@ var _DataLoggerService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*DataLoggerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Log",
-			Handler:    _DataLoggerService_Log_Handler,
+			MethodName: "LogData",
+			Handler:    _DataLoggerService_LogData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

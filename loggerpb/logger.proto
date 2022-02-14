@@ -26,5 +26,5 @@ message DataLoggerResponse {
 }
 
 service DataLoggerService {
-    rpc Log(DataLoggerRequest) returns (DataLoggerResponse) {};
+    rpc LogData(DataLoggerRequest) returns (DataLoggerResponse) {};
 }
