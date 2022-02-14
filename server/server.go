@@ -6,14 +6,14 @@ import (
 	"log"
 	"net"
 
-	"google.golang.org/grpc"
-
 	"github.com/logger/loggerpb"
+
+	"google.golang.org/grpc"
 )
 
 type logger struct{}
 
-func (l *logger) Log(ctx context.Context, req *loggerpb.DataLoggerRequest) (*loggerpb.DataLoggerResponse, error) {
+func (l *logger) LogData(ctx context.Context, req *loggerpb.DataLoggerRequest) (*loggerpb.DataLoggerResponse, error) {
 	fmt.Println("Log function is invoked")
 
 	date := req.GetTimestamp()
@@ -50,5 +50,4 @@ func main() {
 	if err := server.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve on %s: %v", address, err)
 	}
-
 }
