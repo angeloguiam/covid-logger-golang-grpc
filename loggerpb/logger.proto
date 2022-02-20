@@ -9,9 +9,9 @@ enum Status {
 }
 
 message Report {
-    int32 cases = 1;
-    int32 death = 2;
-    int32 recovered = 3;
+    int32 confirmed = 1;
+    int32 recovered = 2;
+    int32 death = 3;
 }
 
 message DataLoggerRequest {
