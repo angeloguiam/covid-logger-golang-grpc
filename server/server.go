@@ -2,9 +2,12 @@ package main
 
 import (
 	"context"
+	"encoding/csv"
 	"fmt"
 	"log"
 	"net"
+	"os"
+	"strconv"
 
 	"github.com/logger/loggerpb"
 
@@ -13,18 +16,32 @@ import (
 
 type logger struct{}
 
+type record struct {
+	timestamp string
+	source    string
+	confirmed int
+	recovered int
+	death     int
+}
+
 func (l *logger) LogData(ctx context.Context, req *loggerpb.DataLoggerRequest) (*loggerpb.DataLoggerResponse, error) {
+	const fileOutput = "record_from_client.csv"
+
 	fmt.Println("Log function is invoked")
 
-	date := req.GetTimestamp()
-	source := req.GetSource()
-	report := req.GetReport()
+	newRecord := record{
+		timestamp: req.GetTimestamp(),
+		source:    req.GetSource(),
+		confirmed: int(req.GetReport().GetConfirmed()),
+		recovered: int(req.GetReport().GetRecovered()),
+		death:     int(req.GetReport().GetDeath()),
+	}
 
-	log.Printf("%v: Report from %v: %v", date, source, report)
+	saveRecordToFile(fileOutput, newRecord)
 
 	res := &loggerpb.DataLoggerResponse{
 		Summary: &loggerpb.Report{
-			Cases:     10,
+			Confirmed: 10,
 			Death:     10,
 			Recovered: 10,
 		},
@@ -32,6 +49,24 @@ func (l *logger) LogData(ctx context.Context, req *loggerpb.DataLoggerRequest) (
 	}
 
 	return res, nil
+}
+
+func saveRecordToFile(filename string, newRecord record) {
+	file, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+
+	if err != nil {
+		log.Fatalf("Error opening file: %v", filename)
+	}
+
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	row := []string{newRecord.timestamp, newRecord.source, strconv.Itoa(newRecord.confirmed), strconv.Itoa(newRecord.recovered), strconv.Itoa(newRecord.death)}
+	writer.Write(row)
+
+	fmt.Println(row)
 }
 
 func main() {
